@@ -38,7 +38,7 @@
 
 // set up radio module
 #ifdef RADIO_SX126X
-  RADIO_TYPE radio = new Module(CS, DIO1, BUSY);
+  RADIO_TYPE radio = new Module(CS, DIO0, BUSY);
 #else
   RADIO_TYPE radio = new Module(CS, DIO0, DIO1);
 #endif
@@ -375,7 +375,10 @@ void loop() {
 
         case RESP_REPEATED_MESSAGE:
           Serial.println(F("Got repeated message:"));
-          Serial.println((char*)respOptData);
+          for(uint8_t i = 0; i < respOptDataLen; i++) {
+            Serial.write(respOptData[i]);
+          }
+          Serial.println();
           break;
 
         default:
